@@ -7,5 +7,5 @@ spring:
     cache: false
 # 这里配置Hadoop
 hadoop:
-  fsdefault: hdfs://192.168.49.133:9000
+  fsdefault: hdfs://hzq:9000
 debug: true

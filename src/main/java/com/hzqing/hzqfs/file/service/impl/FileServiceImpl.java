@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("fileService")
@@ -28,15 +29,18 @@ public class FileServiceImpl implements IFileService {
         configuration.set("fs.defaultFS",hadoopConf.getFsdefault());
         FileSystem fs = FileSystem.newInstance(configuration);
         FileStatus[] fileStatuses = fs.listStatus(new Path(pd.get("path").toString()));
+        List<PageData> pds = new ArrayList<PageData>();
         for (int i = 0; i < fileStatuses.length; i++) {
             FileStatus fileStatus = fileStatuses[i];
+            PageData rpd = new PageData();
+            rpd.put("permission",fileStatus.getPermission().toString());
+            rpd.put("mtime",fileStatus.getModificationTime());
+            System.out.println(fileStatus.getPermission().toString());
             System.out.println(fileStatus);
-            System.out.println(fileStatus.getPath());
+            pds.add(rpd);
         }
-        System.out.println(pd);
-        System.out.println(pd.get("path"));
-        System.out.println(hadoopConf.getFsdefault());
-        return null;
+
+        return pds;
     }
 
 }

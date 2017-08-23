@@ -30,8 +30,9 @@ public class FileController {
     public String files(){
         PageData pd = new PageData();
         pd.put("path","/");
+        List<PageData> files;
         try {
-            List<PageData> files = fileService.getFiles(pd);
+            files = fileService.getFiles(pd);
         } catch (IOException e) {
             e.printStackTrace();
         }
