@@ -14,6 +14,10 @@ public class IndexController {
     public String error(){
         return "404";
     }
+    @RequestMapping(value = "welcome")
+    public String welcom(){
+        return "welcome";
+    }
 
 
 }
