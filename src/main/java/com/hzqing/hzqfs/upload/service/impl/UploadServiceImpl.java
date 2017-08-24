@@ -3,15 +3,21 @@ package com.hzqing.hzqfs.upload.service.impl;
 import com.hzqing.hzqfs.domain.PageData;
 import com.hzqing.hzqfs.hadoop.HadoopConf;
 import com.hzqing.hzqfs.upload.service.IUploadService;
+import com.hzqing.hzqfs.util.UUIDUtil;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Date;
+import java.util.UUID;
+
 @Service("uploadService")
 public class UploadServiceImpl implements IUploadService {
     @Autowired
@@ -19,17 +25,32 @@ public class UploadServiceImpl implements IUploadService {
 
     /**
      * 将上传文件写入到HDFS中
-     * @param file
+     * @param p
      * @return
      */
     @Override
-    public PageData savefile(MultipartFile file) throws IOException {
+    public PageData savefile(PageData p) throws IOException {
         FileSystem fs  =  this.getFileSystem();
-        FSDataInputStream inputStream = new FSDataInputStream(file.getInputStream());
+        MultipartFile file = (MultipartFile) p.get("file");
+        String address = (String) p.get("address");
+        String sysname = (String) p.get("sysname");
+        String modify = (String) p.get("modify");
+        String savePath = hadoopConf.getFsdefault();
+        if(!modify.equals("yes")){
+            savePath = hadoopConf.getFsdefault()+sysname+"/"+address+"/"+file.getOriginalFilename();
 
+        }else{
+            savePath = hadoopConf.getFsdefault()+sysname+"/"+address+"/"+ UUIDUtil.get32UUID();
+        }
+        FSDataOutputStream outputStream = fs.create(new Path(savePath));
+        IOUtils.copyBytes(file.getInputStream(),outputStream,1024,true);
 
+        PageData pd = new PageData();
+        pd.put("filePath",savePath);
+        pd.put("fileName",file.getOriginalFilename());
+        pd.put("modifyTime",new Date());
 
-        return null;
+        return pd;
     }
 
     /**

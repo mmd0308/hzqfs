@@ -29,24 +29,32 @@
 <article class="page-container">
     <form action="/api/upload/caseOne.do" method="post" class="form form-horizontal" id="form-member-add"  enctype="multipart/form-data">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>文件名称：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>系统名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="filename" name="filename"/>
+                <input type="text" class="input-text" placeholder="" id="sysname" name="sysname"/>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">文件存储路径：</label>
-            <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select class="select" size="1" name="address">
-					<option value="" selected="selected">请路径</option>
-					<option value="/java">/java</option>
-					<option value="/hadoop/v1.0">/hadoop/v1.0</option>
-                    <option value="/hadoop/v2.0">/hadoop/v2.0</option>
-				</select>
-				</span> </div>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>文件存储路径：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text"  placeholder="" id="address" name="address"/>
+            </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">附件：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否修改文件名：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="modify" type="radio" id="sex-1" value="yes" checked="checked" />
+                    <label for="sex-1">是</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" name="modify" value="no" />
+                    <label for="sex-2">否</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>附件：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="btn-upload form-group">
                     <input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly="readonly" nullmsg="请添加附件！" style="width:200px"/>

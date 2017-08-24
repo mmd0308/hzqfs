@@ -7,5 +7,5 @@ import java.io.IOException;
 
 public interface IUploadService {
 
-    public PageData savefile(MultipartFile in) throws IOException;
+    public PageData savefile(PageData pd) throws IOException;
 }

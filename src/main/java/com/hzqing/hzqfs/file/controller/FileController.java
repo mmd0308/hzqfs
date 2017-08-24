@@ -20,9 +20,13 @@ public class FileController {
     private FileServiceImpl fileService;
 
 
-    @RequestMapping("/list")
-    public String list(){
-        return "file/file-list";
+    @RequestMapping("/list-one")
+    public String listOne(){
+        return "file/file-list-one";
+    }
+    @RequestMapping("/list-two")
+    public String listTwo(){
+        return "file/file-list-two";
     }
 
     @RequestMapping("files")

@@ -2,6 +2,7 @@ package com.hzqing.hzqfs.file.controller;
 
 import com.google.gson.JsonArray;
 import com.hzqing.hzqfs.domain.PageData;
+import com.hzqing.hzqfs.file.service.IFileService;
 import com.hzqing.hzqfs.file.service.impl.FileServiceImpl;
 import com.hzqing.hzqfs.util.JsonJackUtil;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,10 +19,25 @@ import java.util.List;
 @RequestMapping("/api/file")
 public class FileControllerJSON {
     @Resource(name = "fileService")
-    private FileServiceImpl fileService;
+    private IFileService fileService;
 
-    @RequestMapping("/list")
-    public String list(String path){
+    @RequestMapping("/list-one")
+    public String listOne(String path){
+        PageData pd  = new PageData();
+        pd.put("path","/");
+        List<PageData> files = null;
+        try {
+            files = fileService.listFiles(pd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String res = JsonJackUtil.ObjectToJson(files);
+        System.out.println(res);
+        return  res;
+    }
+
+    @RequestMapping("/list-two")
+    public String listTwo(String path){
         PageData pd  = new PageData();
         pd.put("path",path);
         List<PageData> files = null;

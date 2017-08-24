@@ -19,55 +19,29 @@
     <script type="text/javascript" src="../h-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>品牌管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 品牌管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 文件列表 <span class="c-gray en">&gt;</span> 文件列表一 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="text-c">
-        <form class="Huiform" method="post" action="" target="_self">
-            <span   value="路径" style="width:120px">路径：</span>
-            <input type="text" style="width: 240px;height: 30px" />
-			<button type="button" class="btn btn-success" id="" name="" onClick="picture_colume_add(this);">确定</button>
-        </form>
-    </div>
+
     <div class="text-c" style="height: 30px;"></div>
-    <table class="table table-border table-bordered table-bg">
+    <table class="table table-border table-bordered table-bg" id="data_table">
         <thead>
         <tr>
             <th scope="col" colspan="7">文件列表</th>
         </tr>
         <tr class="text-c">
             <th width="100">文件权限</th>
-            <th width="100">最后修改时间</th>
-            <th width="100">文件副本数量</th>
             <th width="100">文件大小</th>
-            <th width="100">文件名称</th>
+            <th width="200">文件</th>
         </tr>
         </thead>
         <tbody>
         <tr class="text-c">
             <td>-rwxr-xr-x</td>
-            <td>2017年8月23日15:09</td>
-            <td>2</td>
             <td>10M</td>
             <td><a href="">ideaIU-2017.2.2.tar.gz</a></td>
         </tr>
-        <tr class="text-c">
-            <td>drwxr-xr-x</td>
-            <td>2017年8月23日15:09</td>
-            <td>2</td>
-            <td>10M</td>
-            <td><a href="">java</a></td>
-        </tr>
-        <tr class="text-c">
-            <td>drwxr-xr-x</td>
-            <td>2017年8月23日15:09</td>
-            <td>2</td>
-            <td>10M</td>
-            <td><a href="">hadoop</a></td>
-        </tr>
-
         </tbody>
     </table>
 </div>
@@ -81,14 +55,22 @@
 <script type="text/javascript" src="../h-ui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../h-ui/lib/laypage/1.2/laypage.js"></script>
+<script src="https://unpkg.com/vue"></script>
 <script type="text/javascript">
-    $('.table-sort').dataTable({
-        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
-        "bStateSave": true,//状态保存
-        "aoColumnDefs": [
-            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-            {"orderable":false,"aTargets":[0,6]}// 制定列不参与排序
-        ]
+    $(document).ready(function(){
+        $.ajax({
+            url:"../api/file/list-one.do",
+            success:function(data){
+                var vue = new Vue({
+                    el:"#data_table",
+                    data:{
+                        items:data.items
+                    }
+
+                })
+            }
+
+        });
     });
 </script>
 </body>

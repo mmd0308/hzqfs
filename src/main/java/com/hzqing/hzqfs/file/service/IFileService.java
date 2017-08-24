@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface IFileService {
     List<PageData> getFiles(PageData pd) throws IOException;
+
+    List<PageData> listFiles(PageData pd) throws IOException;
 }

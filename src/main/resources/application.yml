@@ -5,7 +5,13 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 600MB
 # 这里配置Hadoop
 hadoop:
-  fsdefault: hdfs://hzq:9000
+  fsdefault: hdfs://hzq:9000/
 debug: true
+
