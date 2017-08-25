@@ -22,6 +22,38 @@ public class DownloadControllerJSON {
     @Resource(name = "downloadService")
     private IDownloadService downloadService;
 
+    /**
+     * 判断下载路径是否存在
+     * @param path
+     * @return
+     */
+    @RequestMapping("/check-path")
+    public String checkPath(String path){
+        PageData p = new PageData();
+        if(!NotNUllUtil.notNull(path)){
+            p.put("res","error");
+            p.put("error","文件路径不能为空！");
+            return JsonJackUtil.ObjectToJson(p);
+        }
+
+        if(!downloadService.isExist(path)){
+            p.put("res","error");
+            p.put("error","文件不存在");
+
+        }else{
+            p.put("success","文件存在");
+            p.put("res","success");
+        }
+        return JsonJackUtil.ObjectToJson(p);
+    }
+
+    /**
+     * 案例一  下载
+     * @param response
+     * @param path
+     * @param filename
+     * @return
+     */
     @RequestMapping("/case-one")
     public String caseOne(HttpServletResponse response,@RequestParam("path")String path,String filename){
         PageData p = new PageData();

@@ -22,5 +22,19 @@ public class DownloadController {
         System.out.println(getfs);
         return getfs;
     }
+    @RequestMapping("case-one")
+    public String caseOne(){
+
+
+        return "download/download-case-one";
+    }
+
+    @RequestMapping("case-one-down")
+    public String caseOneDown(){
+
+
+        return "download/download-case-one-down";
+    }
+
 
 }
