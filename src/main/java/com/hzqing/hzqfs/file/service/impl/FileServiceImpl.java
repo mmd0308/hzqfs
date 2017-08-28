@@ -3,7 +3,6 @@ package com.hzqing.hzqfs.file.service.impl;
 import com.hzqing.hzqfs.domain.PageData;
 import com.hzqing.hzqfs.file.service.IFileService;
 import com.hzqing.hzqfs.hadoop.HadoopConf;
-import com.sun.org.apache.xpath.internal.operations.String;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,40 @@ public class FileServiceImpl implements IFileService {
     private HadoopConf hadoopConf;
 
 
-
+    /**
+     * 逐级别获取文件夹或者文件  不递归
+     * @param pd
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<PageData> getFiles(PageData pd) throws IOException {
-        Configuration configuration = new Configuration();
-        configuration.set("fs.defaultFS",hadoopConf.getFsdefault());
-        FileSystem fs = FileSystem.newInstance(configuration);
-        fs.listFiles(new Path(pd.get("path").toString()),true);
+        FileSystem fs = this.getFileSystem();
         FileStatus[] fileStatuses = fs.listStatus(new Path(pd.get("path").toString()));
-        List<PageData> pds = new ArrayList<PageData>();
+        List<PageData> pds = new ArrayList<>();
         for (int i = 0; i < fileStatuses.length; i++) {
             FileStatus fileStatus = fileStatuses[i];
             PageData rpd = new PageData();
-            rpd.put("permission",fileStatus.getPermission().toString());
-            rpd.put("mtime",fileStatus.getModificationTime());
-            System.out.println(fileStatus.getPermission().toString());
-            System.out.println(fileStatus);
+            if(fileStatus.isDirectory()){
+                rpd.put("permission","d"+fileStatus.getPermission().toString());
+            }else {
+                rpd.put("permission","-"+fileStatus.getPermission().toString());
+            }
+            String path = fileStatus.getPath().toString();
+            rpd.put("path",path.substring(path.lastIndexOf("/")+1,path.length()));
+            rpd.put("fileSize",(fileStatus.getLen()/1024/1024)+"MB");
             pds.add(rpd);
         }
 
         return pds;
     }
 
+    /**
+     * 获取所有的文件  递归获取
+     * @param pd
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<PageData> listFiles(PageData pd) throws IOException {
         FileSystem fs = this.getFileSystem();

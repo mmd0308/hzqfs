@@ -15,18 +15,18 @@ public class DownloadController {
     @Resource(name = "downloadService")
     private IDownloadService downloadService;
 
-    @RequestMapping("/down")
-    @ResponseBody
-    public String down(){
-        String getfs = downloadService.getfs();
-        System.out.println(getfs);
-        return getfs;
-    }
     @RequestMapping("case-one")
     public String caseOne(){
 
 
         return "download/download-case-one";
+    }
+
+    @RequestMapping("more-case-one")
+    public String mcaseOne(){
+
+
+        return "download/download-more-case-one";
     }
 
     @RequestMapping("case-one-down")

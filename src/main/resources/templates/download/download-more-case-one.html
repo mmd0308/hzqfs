@@ -1,0 +1,167 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="../h-ui//favicon.ico" />
+    <link rel="Shortcut Icon" href="../h-ui//favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../h-ui/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="../h-ui/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="../h-ui/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../h-ui/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../h-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../h-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../h-ui/static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="../h-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 文件下载 <span class="c-gray en">&gt;</span> 系列一 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<article class="page-container">
+    <form action="" method="post" class="form form-horizontal" id="check-url">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius"  href="javascript:;">
+              文件路径是否有效测试：
+            </a>
+        </span>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>文件存储路径：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"   placeholder="请输入文件存储路径； eg:hdfs://hzq:9000/demo1/db4e1b8b2b79482dbb2343d2089bb349" name="path" id="filePath"/>
+            </div>
+
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" onclick="check_path();" style="width: 100px;" value="&nbsp;&nbsp;测试&nbsp;&nbsp;"/>
+            </div>
+        </div>
+    </form>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius"  href="javascript:;">
+              下载案例一：
+            </a>
+        </span>
+    </div>
+    <form action="/api/download/more-case-one.do" method="post" class="form form-horizontal" id="form-change-password-case-one">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">文件名称：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"  placeholder="文件保存名称；eg:apache-maven-3.5.0-bin.tar.gz" name="filename" id="caseOneNameOne"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3" ><span class="c-red">*</span>文件存储路径：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input  class="input-text"   placeholder="请输入文件路径；eg:hdfs://hzq:9000/demo1/db4e1b8b2b79482dbb2343d2089bb349" name="path" id="caseOne_PathOne"/>
+            </div>
+            <div class="formControls" style="width: 100px; float: left;">
+                <input class="btn btn-primary radius" style="width: 80px;" type="submit" value="&nbsp;&nbsp;下载&nbsp;&nbsp;"/>
+            </div>
+        </div>
+    </form>
+    <form action="/api/download/more-case-one.do" method="post" class="form form-horizontal" id="form-change-password-case">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">文件名称：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"  placeholder="文件保存名称；eg:apache-maven-3.5.0-bin.tar.gz" name="filename" id="caseOneNameTwo"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3" ><span class="c-red">*</span>文件存储路径：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"   placeholder="请输入文件路径；eg:hdfs://hzq:9000/demo1/db4e1b8b2b79482dbb2343d2089bb349" name="path" id="caseOne_PathTwo"/>
+            </div>
+            <div class="formControls" style="width: 100px;float: left;">
+                <input class="btn btn-primary radius" style="width: 80px;" type="submit" value="&nbsp;&nbsp;下载&nbsp;&nbsp;"/>
+            </div>
+        </div>
+    </form>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius"  href="javascript:;">
+              下载案例二：
+            </a>
+        </span>
+    </div>
+    <form action="/api/download/more-case-two.do" method="post" class="form form-horizontal" id="form-change-password-case-two">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">文件名称：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"   placeholder="文件保存名称；eg:apache-maven-3.5.0-bin.tar.gz" name="filename" id="caseTwoName"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3" ><span class="c-red">*</span>文件存储路径：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"   placeholder="请输入文件路径；eg:hdfs://hzq:9000/demo1/db4e1b8b2b79482dbb2343d2089bb349" name="path" id="caseTwo_PathOne"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3" ><span class="c-red">*</span>文件存储路径：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="width:50%;">
+                <input type="text" class="input-text"   placeholder="请输入文件路径；eg:hdfs://hzq:9000/demo1/db4e1b8b2b79482dbb2343d2089bb349" name="path" id="caseTwo_PathTwo"/>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" style="width: 100px;" type="submit" value="&nbsp;&nbsp;打包下载??&nbsp;&nbsp;"/>
+            </div>
+        </div>
+    </form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../h-ui/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../h-ui/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../h-ui/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../h-ui/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="../h-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="../h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    //文件路径测试
+    function check_path() {
+        var path = $("#filePath").val();
+        $.ajax({
+           url:"/api/download/check-path.do",
+           data:"path="+path,
+           success:function (data) {
+                alert(data);
+           } 
+        });
+    }
+    //案例一下载
+    function case_one_down() {
+        var filename = $("#caseOneName").val();
+        var path = $("#caseOnePath").val();
+        $.ajax({
+            url:"/api/download/case-one.do",
+            type:"Get",
+            data:"path="+path,
+            cache:false,
+            success:function (data) {
+                alert("success");
+            }
+        });
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

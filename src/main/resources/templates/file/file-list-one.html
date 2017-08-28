@@ -72,11 +72,8 @@
                     url:"../api/file/list-one.do",
                     success:function(data){
                        that.$set(that,'list',JSON.parse(data));
-                       console.log(that.items);
                     }
                 });
-
-               // this.$set(this,'list',date);
             }
         }
 

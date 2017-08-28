@@ -10,4 +10,5 @@ public class PictureController {
     public String list(){
         return "picture/picture-list";
     }
+
 }

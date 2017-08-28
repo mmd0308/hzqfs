@@ -5,6 +5,7 @@ import com.hzqing.hzqfs.domain.PageData;
 import com.hzqing.hzqfs.file.service.IFileService;
 import com.hzqing.hzqfs.file.service.impl.FileServiceImpl;
 import com.hzqing.hzqfs.util.JsonJackUtil;
+import com.hzqing.hzqfs.util.NotNUllUtil;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,9 @@ public class FileControllerJSON {
     @RequestMapping("/list-two")
     public String listTwo(String path){
         PageData pd  = new PageData();
+        if (!NotNUllUtil.notNull(path)){
+            path = "/";
+        }
         pd.put("path",path);
         List<PageData> files = null;
         try {
@@ -47,7 +51,6 @@ public class FileControllerJSON {
             e.printStackTrace();
         }
         String res = JsonJackUtil.ObjectToJson(files);
-        System.out.println(res);
         return  res;
     }
 }

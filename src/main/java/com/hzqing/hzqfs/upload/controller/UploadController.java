@@ -14,4 +14,11 @@ public class UploadController {
         return "upload/upload-single-one";
     }
 
+    @RequestMapping("/mUploadOne")
+    public String mcaseOne(){
+        return "upload/upload-more-one";
+    }
+
+
+
 }

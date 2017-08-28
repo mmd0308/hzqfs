@@ -12,11 +12,11 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Service("uploadService")
 public class UploadServiceImpl implements IUploadService {
@@ -51,6 +51,42 @@ public class UploadServiceImpl implements IUploadService {
         pd.put("modifyTime",new Date());
 
         return pd;
+    }
+
+    /**
+     * 多文件保存
+     * @param p
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public List<PageData> msavefile(PageData p) throws IOException{
+        FileSystem fs = this.getFileSystem();
+        MultiValueMap<String, MultipartFile> fileMap = (MultiValueMap<String, MultipartFile>) p.get("file");
+        String address = (String) p.get("address");
+        String sysname = (String) p.get("sysname");
+        String modify = (String) p.get("modify");
+        List<MultipartFile> files = fileMap.get("file");
+        String savePath = hadoopConf.getFsdefault()+sysname+"/"+address+"/";
+        List<PageData> pds = new ArrayList<PageData>();
+        for (MultipartFile file:
+                files) {
+            if (!file.isEmpty()){
+                if(!modify.equals("yes")){
+                    savePath = savePath + file.getOriginalFilename();
+                }else{
+                    savePath = savePath + UUIDUtil.get32UUID();
+                }
+                FSDataOutputStream outputStream = fs.create(new Path(savePath));
+                IOUtils.copyBytes(file.getInputStream(),outputStream,1024,true);
+                PageData pd = new PageData();
+                pd.put("filePath",savePath);
+                pd.put("fileName",file.getOriginalFilename());
+                pd.put("modifyTime",new Date());
+                pds.add(pd);
+            }
+        }
+        return pds;
     }
 
     /**

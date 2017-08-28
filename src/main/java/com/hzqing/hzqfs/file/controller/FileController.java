@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -29,17 +30,6 @@ public class FileController {
         return "file/file-list-two";
     }
 
-    @RequestMapping("files")
-    @ResponseBody
-    public String files(){
-        PageData pd = new PageData();
-        pd.put("path","/");
-        List<PageData> files;
-        try {
-            files = fileService.getFiles(pd);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "files";
-    }
+
+
 }

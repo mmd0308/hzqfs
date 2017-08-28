@@ -94,5 +94,52 @@ public class DownloadControllerJSON {
         return JsonJackUtil.ObjectToJson(p);
 
     }
+    /**
+     * 案例一  下载
+     * @param response
+     * @param path
+     * @param filename
+     * @return
+     */
+    @RequestMapping("/more-case-one")
+    public String mCaseOne(HttpServletResponse response,@RequestParam("path")String path,String filename){
+        PageData p = new PageData();
+        if(!downloadService.isExist(path)){
+            p.put("res","文件不存在");
+            return JsonJackUtil.ObjectToJson(p);
+        }
+
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("application/octet-stream"); //不清楚文件下载类型
+        InputStream inputStream;
+        OutputStream outputStream;
+        PageData pd = new PageData();
+        pd.put("path",path);
+        try {
+            if (NotNUllUtil.notNull(filename)){
+                response.setHeader("content-disposition", "attachment;filename="
+                        + URLEncoder.encode(filename, "UTF-8"));
+            }else{
+                String filen = path.substring(path.lastIndexOf("/")+1,path.length());
+                response.setHeader("content-disposition", "attachment;filename="
+                        + URLEncoder.encode(filen, "UTF-8"));
+            }
+            inputStream = downloadService.downFile(pd);
+            outputStream = response.getOutputStream();
+            byte[] b = new byte[4096];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                outputStream.write(b, 0, length);
+            }
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        p.put("res","success");
+        return JsonJackUtil.ObjectToJson(p);
+
+    }
 
 }
