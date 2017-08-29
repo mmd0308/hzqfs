@@ -25,7 +25,10 @@ public class FileControllerJSON {
     @RequestMapping("/list-one")
     public String listOne(String path){
         PageData pd  = new PageData();
-        pd.put("path","/");
+        if (!NotNUllUtil.notNull(path)){
+            path = "/";
+        }
+        pd.put("path",path);
         List<PageData> files = null;
         try {
             files = fileService.listFiles(pd);

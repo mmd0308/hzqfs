@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <meta name="renderer" content="webkit|ie-comp|ie-stand" />
@@ -37,10 +37,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="text-c" v-for="item in list">
-            <td>{{item.permission}}</td>
-            <td>{{item.fileSize}}</td>
-            <td><a href="">{{item.path}}</a></td>
+        <tr class="text-c" th:each="list:${lists}">
+            <td th:text="${list.permission}"></td>
+            <td th:text="${list.fileSize}"></td>
+            <td><a href="" th:text="${list.path}"></a></td>
         </tr>
         </tbody>
     </table>
@@ -55,30 +55,7 @@
 <script type="text/javascript" src="../h-ui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../h-ui/lib/laypage/1.2/laypage.js"></script>
-<script src="https://unpkg.com/vue"></script>
 <script type="text/javascript">
-    var vm = new Vue({
-        el:"#data_table",
-        data:{
-            list:[]
-        },
-        mounted:function(){
-            this.getData();
-        },
-        methods:{
-            getData:function(){
-                var that = this;
-                $.ajax({
-                    url:"../api/file/list-one.do",
-                    success:function(data){
-                       that.$set(that,'list',JSON.parse(data));
-                    }
-                });
-            }
-        }
-
-    });
-
 
 </script>
 </body>

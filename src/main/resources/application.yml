@@ -9,7 +9,8 @@ spring:
     multipart:
       enabled: true
       max-file-size: 500MB
-      max-request-size: 600MB
+      max-request-size: 500MB
+
 # 这里配置Hadoop
 hadoop:
   fsdefault: hdfs://hzq:9000/

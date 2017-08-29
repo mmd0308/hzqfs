@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <meta name="renderer" content="webkit|ie-comp|ie-stand" />
@@ -26,8 +26,8 @@
     <div class="text-c">
         <form class="Huiform" method="post" action="" target="_self">
             <span   value="路径" style="width:120px">路径：</span>
-            <input type="text" class="input-text" name="path" id="path" style="width: 60%;height:30px;"/>&nbsp;&nbsp;
-			<button type="button" class="btn btn-success" id="" name="" onClick="picture_colume_add(this);">确定</button>
+            <input type="text" class="input-text" name="path" id="path" th:value="${path}" style="width: 60%;height:30px;"/>&nbsp;&nbsp;
+			<button type="button" class="btn btn-success" id="" name="" onClick="loading_list(this);" value="qd">确定</button>
         </form>
     </div>
     <div class="text-c" style="height: 30px;"></div>
@@ -43,10 +43,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="text-c" v-for="item in list">
+  <!--      <tr class="text-c" v-for="item in list">
             <td>{{item.permission}}</td>
-            <td >{{item.fileSize}}</td>
-            <td><a href="javascript:;" class="maincolor" onclick="file_two_detail(this);">{{item.path}}</a></td>
+            <td>{{item.fileSize}}</td>
+            <td><a href="">{{item.path}}</a></td>
+        </tr>-->
+        <tr class="text-c" th:each="list:${lists}">
+            <td th:text="${list.permission}"></td>
+            <td th:text="${list.fileSize}"></td>
+            <td><a href="javascript:;" class="maincolor" onclick="file_two_detail(this);" th:text="${list.path}"></a></td>
         </tr>
         </tbody>
     </table>
@@ -61,10 +66,10 @@
 <script type="text/javascript" src="../h-ui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="../h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../h-ui/lib/laypage/1.2/laypage.js"></script>
-<script src="https://unpkg.com/vue"></script>
+<!--<script src="https://unpkg.com/vue"></script>-->
 <script type="text/javascript">
 
-    var vm = new Vue({
+    /*var vm = new Vue({
         el:"#data_table",
         data:{
             list:[]
@@ -86,16 +91,29 @@
             }
         }
 
-    });
+    });*/
 
     function file_two_detail(that){
-        var permission = that.parentElement.parentNode.firstChild.textContent.substr(0,1);
+        var permission = that.parentElement.parentNode.firstElementChild.textContent.substr(0,1);
         if(permission == "d"){
-            window.location.href = "../file/list-two.do?path=/"+$("#path").val();
+           loading_list(that);
         }else{
-            layer_show(title,url,w,h);
+            alert("尚未开发完成");
         }
 
+    }
+
+    function loading_list(that){
+        var path = $("#path").val();
+        var allPath = path;
+        if(that.type!="button"){
+            if(path=="/"){
+                allPath= path+that.text;
+            }else{
+                allPath= path+"/"+that.text;
+            }
+        }
+        window.location.href = "../file/list-two.do?path="+allPath;
     }
 
 
