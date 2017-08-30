@@ -10,4 +10,6 @@ public interface IFileService {
     List<PageData> getFiles(PageData pd) throws IOException;
 
     List<PageData> listFiles(PageData pd) throws IOException;
+
+    boolean deleteFile(PageData pd) throws IOException;
 }

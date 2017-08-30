@@ -69,6 +69,13 @@ public class FileServiceImpl implements IFileService {
         return lpd;
     }
 
+    @Override
+    public boolean deleteFile(PageData pd) throws IOException {
+        FileSystem fs = this.getFileSystem();
+        boolean res = fs.delete(new Path(pd.get("path").toString()), true);
+        return res;
+    }
+
     /**
      * 获取Hadoop的FileSystem
      * @return

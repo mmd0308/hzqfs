@@ -56,4 +56,27 @@ public class FileControllerJSON {
         String res = JsonJackUtil.ObjectToJson(files);
         return  res;
     }
+
+    /**
+     * 删除文件
+     * @param path
+     * @return
+     */
+    @RequestMapping("/delete")
+    public String deleteFile(String path){
+        PageData pd = new PageData();
+        pd.put("path",path);
+        try {
+            boolean res = fileService.deleteFile(pd);
+            if (res){
+                pd.put("res","success");
+            }else {
+                pd.put("res","error");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return JsonJackUtil.ObjectToJson(pd);
+
+    }
 }

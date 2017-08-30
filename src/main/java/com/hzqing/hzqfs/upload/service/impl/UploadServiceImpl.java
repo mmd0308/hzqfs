@@ -38,18 +38,15 @@ public class UploadServiceImpl implements IUploadService {
         String savePath = hadoopConf.getFsdefault();
         if(!modify.equals("yes")){
             savePath = hadoopConf.getFsdefault()+sysname+"/"+address+"/"+file.getOriginalFilename();
-
         }else{
             savePath = hadoopConf.getFsdefault()+sysname+"/"+address+"/"+ UUIDUtil.get32UUID();
         }
         FSDataOutputStream outputStream = fs.create(new Path(savePath));
         IOUtils.copyBytes(file.getInputStream(),outputStream,1024,true);
-
         PageData pd = new PageData();
         pd.put("filePath",savePath);
         pd.put("fileName",file.getOriginalFilename());
         pd.put("modifyTime",new Date());
-
         return pd;
     }
 
